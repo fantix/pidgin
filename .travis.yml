@@ -19,12 +19,25 @@ script:
 before_deploy:
   - BRANCH=$(echo "$TRAVIS_BRANCH" | tr / _) # remove '/' from branch name
   - zip from_travis_$BRANCH.zip lambda_function.py
+  # - mkdir -p to_upload
+  # - zip to_upload/from_travis_$BRANCH.zip lambda_function.py
+
+# deploy:
+#   provider: s3
+#   access_key_id: AKIAI2DDBSIFZD77A3XA
+#   secret_access_key:
+#     secure: qZEu8fQDhrjPP9C91DFsQLEWfx+HUK4BQr6KzQjvzXbV57KTYH69IJozl8RbXK0UbqPj7g7tHSSZU5VRYZ3qEZNFJQbj3ryrPw8apJ0bFGg5qobU7B1FsvejlJpYBAiMJESW9No20vK4ufr+z7pEnwI58xJPDHbAPQmOinFcHrYwSvq5adLWLaq4vQ5OpY+DXEyjzIUhNoMX+iwSovPMvm1XwzA1IEclD14VIhsz68YyG4wLadKDRuZyDiZy3uF/MfR22CMrXPkdBlov83a1rj3UeHohPFZkrPCZK4P+ZPtM+seZg9qSdWKwDZHa6wvLi2As658Ox7dNM/VIPJ7daIsiLxjesi90CbAbdVIB+axHVvBa8dd5ioJowQkcsN1DXdLrKiJfeXkkWc0egfIh8j0jFpRjuD0bQC1H5aVMl8ZKdT7KUdHoHL/r3L7rugt6QzLrl1fYD8kEbbKc6ibRLjdRkRPo+aDeTmTzzDQTbHeC5G34GkZHsLUN66PkZ2HUEEEKrTr0wrpPGLUrxcVQSd2dZzc13DevPbkRWVE9OVj4ymrCsZni7l5UCCSMCKsbew8Ku17W3jUg+83NTD83/HfUqkQCsjpGon2Na7XoyJm5z46q/vaQu2g9SEjJFhToNTck0+41bWklTUwqbvTbZYlGDNpVXVWMEhKyNqa6JI8=
+#   bucket: pauline-upload-test
+#   local-dir: to_upload
+#   skip_cleanup: true
+#   on:
+#     branch: test/travis
 
 deploy:
   provider: lambda
-  access_key_id: AKIAJBHFBXFFAYGMLKWQ
+  access_key_id: AKIAI2DDBSIFZD77A3XA
   secret_access_key:
-    secure: W0inbJTqmFfpvPoIlHIfMiZs8WeCx0z95e4MnDxtEz+RUSP3q1j8tjoCV7r5nTlgySvob8NKC+PziA6NlKy6Dz+seIojf8Seev8CL5UIY1gIUtrZSG8nnfIVjrLkqTM4UlMiJlcwCSOozpivybCwj9KA3Y8otcuIJtPj5OL3/dC6KW9sUi7RhiO9v1CNJHHdbYMKevj7VDXTRD3CJXwodO+imBoDf8HVkLUPjIXvvcOS/f3WT7eTcX/QPo3xjayS9clJPpp1NKOTn/GSEzZY9hDOTaVk9381LZDH0z8y4LVpOWfarHUBs0XErxAH7nz+Ox1NR9FYxT69h8e1MqDLyI1RG5cj7n2K5hBQU64+SpziezcenoSGU6SlMuT4qEm/zXy22CvemAkDl/b2TlEcmD0BP3zQ4hnRRlhEhoUNCQmfOAL0ldG2ZNgcfOYSGt4QQKZomRa9B4mYP59mJk6dXS7czja6suvvcv7aU54yciXsg/fzFe0CrQakXboUus0zmZQ4eBTJGQYpi5s6ZyqClxj5YjKXVi8N1P6Ytoxp3WMvPbf7AfWhSwFF3VU/Iemlit7sSZhDFpQJVDfPKbX4L7f+CxH0IEaBUJFCKMzi/S47d6+byWrdioMEl3qBzAEQSKV87w0krwu9i1I4SVNl6If6ATe0wkHVcc6VQa0nPTQ=
+    secure: qZEu8fQDhrjPP9C91DFsQLEWfx+HUK4BQr6KzQjvzXbV57KTYH69IJozl8RbXK0UbqPj7g7tHSSZU5VRYZ3qEZNFJQbj3ryrPw8apJ0bFGg5qobU7B1FsvejlJpYBAiMJESW9No20vK4ufr+z7pEnwI58xJPDHbAPQmOinFcHrYwSvq5adLWLaq4vQ5OpY+DXEyjzIUhNoMX+iwSovPMvm1XwzA1IEclD14VIhsz68YyG4wLadKDRuZyDiZy3uF/MfR22CMrXPkdBlov83a1rj3UeHohPFZkrPCZK4P+ZPtM+seZg9qSdWKwDZHa6wvLi2As658Ox7dNM/VIPJ7daIsiLxjesi90CbAbdVIB+axHVvBa8dd5ioJowQkcsN1DXdLrKiJfeXkkWc0egfIh8j0jFpRjuD0bQC1H5aVMl8ZKdT7KUdHoHL/r3L7rugt6QzLrl1fYD8kEbbKc6ibRLjdRkRPo+aDeTmTzzDQTbHeC5G34GkZHsLUN66PkZ2HUEEEKrTr0wrpPGLUrxcVQSd2dZzc13DevPbkRWVE9OVj4ymrCsZni7l5UCCSMCKsbew8Ku17W3jUg+83NTD83/HfUqkQCsjpGon2Na7XoyJm5z46q/vaQu2g9SEjJFhToNTck0+41bWklTUwqbvTbZYlGDNpVXVWMEhKyNqa6JI8=
   function_name: "from_travis_${BRANCH}"
   region: "us-east-2"
   role: "arn:aws:iam::707767160287:role/dos-indexd-lambda-dev"
