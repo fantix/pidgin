@@ -14,7 +14,17 @@ install:
 
 # run tests
 script:
-  - py.test -vv --cov=pidgin --cov-report xml tests
+  - zip from_travis_$TRAVIS_BRANCH.zip lambda_function.py
 
-after_script:
-  - python-codacy-coverage -r coverage.xml
+deploy:
+  provider: lambda
+  access_key_id: AKIAJBHFBXFFAYGMLKWQ
+  secret_access_key:
+    secure: "h+tcUZ3+F9kNTyx9x5EXItX1NaNWuHRC6du1mK0YskQJgaRwrIqrE99Kzh/DgDfFR7tR1gXV7gkqzS95PjSjPpfNro5g+49nmp8AdBgXBxoxOEr9Y6bBa80P4fi2tMp71PHeP17Rs0//jftd1RoXm69D68ubw+6vNDA8gfZmVXvLwsc1EOpjgeUBK1aHW4InEY5vn0ZNoMxlSAPBEgdp/+x/PeODlXDTT6Qy/5Abd6bqoj2IJ/vPCU8KRG/KFA5n+We2Cvn5L1pdYHA/hna24OSYqpFDDlPb9j2Qwc3G4ABZtdlD9nr4jy43vdfs7tJ31gFX6zEFlw3EKwGq17ZwM92SHQDAzndmKWvv7rFVkKIHmQ8BcyPHp6LyXTyLDHi6Py1b9KN1G5iwdPZePWM2B7nnHTvnL1rnu5qj7uwXVYE56PwuK6fTldmeuJl26lz3YZnCYp4WCL8KEQ7aWxtj9v+lA6nRadoTJIPqfZVYzYP6Q2k9HGsiRjNEtM7C6DjEHWbQ7uMx35PJY9tu0Ax7NGuSaTrZHrBJnMjP68nJXIUBcAvwyIZGLS8J/l3NfvLWJ85FYInDDKFQXMMN3YyDaDuJwpYHmZWXFzZLCrDgtuY5QfmjnfipSBi3RhW8ooH9Ut5aYBbKNKauQd8gWw8XQPqbjIupMntZuZhwCitQbZM="
+  function_name: "from_travis_${TRAVIS_BRANCH}"
+  region: "us-east-2"
+  role: "arn:aws:iam::707767160287:role/dos-indexd-lambda-dev"
+  runtime: "python3.6"
+  publish: true # create a new version of the lambda function
+  zip: "from_travis_${TRAVIS_BRANCH}.zip"
+  handler_name: "lambda_function.lambda_handler"
