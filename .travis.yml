@@ -12,8 +12,10 @@ install:
   - pip install -r requirements.txt
   - pip install -r dev-requirements.txt
 
-# run tests
 script:
+  - echo "Run tests here"
+
+before_deploy:
   - zip from_travis_$TRAVIS_BRANCH.zip lambda_function.py
 
 deploy:
@@ -28,3 +30,8 @@ deploy:
   publish: true # create a new version of the lambda function
   zip: "from_travis_${TRAVIS_BRANCH}.zip"
   handler_name: "lambda_function.lambda_handler"
+  on:
+    repo: uc-cdis/pidgin
+    branches:
+      only:
+        - test/travis
