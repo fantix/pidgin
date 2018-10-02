@@ -45,5 +45,6 @@ deploy:
   publish: true # create a new version of the lambda function
   zip: "from_travis_${BRANCH}.zip"
   handler_name: "lambda_function.lambda_handler"
+  skip_cleanup: true
   on:
     branch: test/travis
